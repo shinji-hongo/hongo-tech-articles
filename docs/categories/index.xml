@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Hongo Tech Articles</title>
-    <link>http://localhost:1313/categories/</link>
+    <link>https://shinji-hongo.github.io/hongo-tech-articles/categories/</link>
     <description>Recent content in Categories on Hongo Tech Articles</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>© 2025 </copyright>
-    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://shinji-hongo.github.io/hongo-tech-articles/categories/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>開発手法</title>
-      <link>http://localhost:1313/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</link>
+      <link>https://shinji-hongo.github.io/hongo-tech-articles/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</guid>
+      <guid>https://shinji-hongo.github.io/hongo-tech-articles/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</guid>
       <description></description>
       
     </item>

@@ -1,4 +1,4 @@
-baseURL = 'http://localhost:1313/'
+baseURL = 'https://shinji-hongo.github.io/hongo-tech-articles/'
 languageCode = 'ja'
 title = 'Hongo Tech Articles'
 theme = 'blowfish'
