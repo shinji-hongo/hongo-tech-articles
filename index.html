@@ -1,0 +1,3603 @@
+<!--
+================================================================================
+本郷工業 HP v2 - Tailwind CSS + Lucide Icons 版
+================================================================================
+
+【変更内容】
+- Tailwind CSS による UI 現代化
+- Lucide Icons 統合（ナビゲーション、フォーム）
+- インラインスタイル → Tailwind utility classes に置き換え
+- レスポンシブ最適化
+
+【最新修正 - 2025-11-14】
+✅ スマホヘッダー自動非表示機能を一時無効化
+✅ スクロール位置にヘッダー高さオフセット（100px）を追加
+✅ 沿革と代表者紹介のHTML順序を修正（メニュー順と一致）
+✅ 確認画面のテキスト切れを修正（word-break追加）
+
+【開発ステータス】
+- Status: テスト中
+- Branch: feature/html-tailwind-redesign
+- Last Updated: 2025-11-14
+- Version: v3_fixed
+
+【テスト状況】
+- [✅] Mac mini M1 - Chrome/Safari デスクトップ確認
+- [ ] iPhone モバイル確認
+- [ ] フォーム送信テスト
+- [ ] ファイル添付テスト（CAD ファイル）
+- [ ] 旧ブラウザ対応確認
+
+【本番デプロイ計画】
+Phase 1: v2 ファイル作成 ✅
+Phase 2: ローカルテスト（1-2週間）
+Phase 3: Lolipop へアップロード（v2 のみ）
+Phase 4: URL パラメータで AB テスト
+Phase 5: 段階的本番移行（2-3週間）
+
+================================================================================
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有限会社本郷工業 | プレス金型設計・製造のスペシャリスト</title>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS99PXSRH5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HS99PXSRH5');
+
+        // GA4 カスタムイベント追跡
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = [
+                { id: 'contact-btn-hero', location: 'ファーストビュー' },
+                { id: 'contact-btn-company', location: '企業紹介' },
+                { id: 'contact-btn-equipment', location: '設備紹介' },
+                { id: 'contact-btn-cases', location: '実績紹介' },
+                { id: 'contact-btn-footer', location: 'フッター' }
+            ];
+            buttons.forEach(btn => {
+                const element = document.getElementById(btn.id);
+                if (element) {
+                    element.addEventListener('click', function() {
+                        gtag('event', 'contact_button_click', {
+                            'button_location': btn.location,
+                            'event_category': 'contact_form'
+                        });
+                        console.log(`✓ ${btn.location}`);
+                    });
+                }
+            });
+        });
+
+        (function() {
+            const depths = [25, 50, 75, 100];
+            const tracked = new Set();
+            window.addEventListener('scroll', function() {
+                const h = window.innerHeight;
+                const dh = document.documentElement.scrollHeight;
+                const pct = Math.round((window.scrollY + h) / dh * 100);
+                depths.forEach(d => {
+                    if (pct >= d && !tracked.has(d)) {
+                        tracked.add(d);
+                        gtag('event', 'scroll_depth', {'scroll_depth_percentage': d});
+                        console.log(`✓ ${d}%`);
+                    }
+                });
+            });
+        })();
+    </script>
+    <!-- ★ ここにこれを追加 ★ -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            max-width: 100vw;
+            scroll-padding-top: 100px;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+            min-width: 200px;
+            height: 80px;
+        }
+
+        .logo-jp {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+            font-size: 1.2rem;
+        }
+
+        .logo-en {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            height: 80px;
+            width: auto;
+            pointer-events: none;
+        }
+
+        .logo:hover .logo-jp {
+            display: inline;
+            opacity: 1;
+        }
+
+        .logo:hover .logo-en {
+            opacity: 0;
+        }
+        
+        .nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav > ul > li {
+            position: relative;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .nav a:hover {
+            color: #3b82f6;
+        }
+
+        /* ドロップダウンメニュー */
+        .nav-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            min-width: 180px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0;
+            list-style: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .nav > ul > li:hover .nav-dropdown {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-dropdown li {
+            padding: 0;
+        }
+
+        .nav-dropdown a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+        }
+
+        .nav-dropdown a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #60a5fa;
+        }
+        
+        /* ===== スマホ用ハンバーガーメニュー ===== */
+        /* デスクトップではこれらは全て非表示 */
+        .mobile-menu-toggle {
+            display: none !important;
+            z-index: 1001;
+        }
+        
+        .mobile-menu-btn {
+            display: none !important;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 0.35rem;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2.5px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* スマホ用モバイルナビ - デスクトップで非表示 */
+        .nav-mobile {
+            display: none !important;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            flex-direction: column;
+            list-style: none;
+            padding: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            z-index: 999;
+        }
+        
+        .nav-mobile.active {
+            display: flex !important;
+        }
+        
+        .nav-mobile li {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-mobile a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .nav-mobile a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #60a5fa;
+        }
+        
+        .nav-mobile-submenu {
+            display: none;
+            list-style: none;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0;
+        }
+        
+        .nav-mobile-submenu.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nav-mobile-submenu li {
+            border: none;
+        }
+        
+        .nav-mobile-submenu a {
+            padding-left: 3rem;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== スマホメディアクエリ（768px以下） ===== */
+        @media (max-width: 768px) {
+            /* デスクトップメニューを隠す */
+            .nav {
+                display: none !important;
+            }
+            
+            /* スマホメニューボタンを表示 */
+            .mobile-menu-toggle {
+                display: flex !important;
+            }
+            
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+            
+            /* スマホメニューを表示可能に */
+            .nav-mobile {
+                display: none !important;  /* 初期状態は非表示 */
+            }
+            
+            .nav-mobile.active {
+                display: flex !important;  /* クリック時に表示 */
+            }
+            
+            .logo {
+                min-width: auto;
+                height: auto;
+            }
+            
+            .logo-en {
+                height: auto;
+                max-height: 40px;
+            }
+            
+            /* 設備紹介のレスポンシブ対応 */
+            .equipment-category {
+                margin-bottom: 2rem;
+                /* デスクトップではpadding-left で左側切れ防止 */
+                padding-left: 0;
+                padding-right: 0;
+            }
+            
+            .equipment-table {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                /* デスクトップでは padding で余白を確保 */
+                padding: 0 1.5rem;
+            }
+            
+            .equipment-row {
+                font-size: 0.85rem;
+                /* デスクトップでもパディングを明示的に設定 */
+                padding: 1rem 1.5rem;
+            }
+            
+            .eq-col-machine,
+            .eq-col-model,
+            .eq-col-qty,
+            .eq-col-maker {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .software-row {
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* メールアドレス入力フィールドの最適化 */
+        input[type="email"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        @media (max-width: 768px) {
+            input[type="email"],
+            input[type="text"],
+            textarea {
+                font-size: 16px;
+            }
+        }
+        
+        /* ヒーローセクション */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+        }
+        
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(30, 58, 138, 0.75), rgba(37, 99, 235, 0.75));
+        }
+        
+        .hero-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* 強みセクション */
+        .strengths {
+            padding: 5rem 0;
+            background: #f9fafb;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+        
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .strength-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .strength-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .strength-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .strength-content {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .strength-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -50px auto 1.5rem;
+            font-size: 1.8rem;
+            color: #60a5fa;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .strength-content h3 {
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+        
+        .strength-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* 会社情報セクション */
+        .company-info {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .info-content h2 {
+            font-size: 2.2rem;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .highlight {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        
+        .info-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .info-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-image.large {
+            grid-column: 1 / -1;
+            height: 250px;
+        }
+        
+        /* 設備紹介セクション */
+        .equipment {
+            padding: 5rem 0;
+            background: #f9fafb;
+        }
+        
+        /* ===== 設備表：正しい階層設計 + モバイル対応（カード型） ===== */
+        /* 【重要】この設計で：
+           1. デスクトップ: 表形式を維持して見やすく
+           2. モバイル: カード型で横スクロール不要に
+        */
+        
+        /* 外側：視覚効果（影・丸角） */
+        .equipment-category {
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        
+        .equipment-category-title {
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #3b82f6;
+        }
+        
+        /* 内側：コンテンツ制御 */
+        .equipment-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* ===== デスクトップ: 表形式（769px以上） ===== */
+        @media (min-width: 769px) {
+            .equipment-row {
+                display: grid;
+                grid-template-columns: 2fr 3fr 1fr 2fr;
+                gap: 1rem;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid #e5e7eb;
+                align-items: center;
+            }
+            
+            .equipment-row:last-child {
+                border-bottom: none;
+            }
+            
+            .equipment-header {
+                background: linear-gradient(135deg, #1e3a8a, #2563eb);
+                color: white;
+                font-weight: bold;
+                padding: 1rem 1.5rem;
+            }
+            
+            .equipment-row:not(.equipment-header):hover {
+                background: #f9fafb;
+            }
+            
+            .eq-col-machine {
+                font-weight: 600;
+                color: #1e3a8a;
+            }
+            
+            .equipment-header .eq-col-machine {
+                color: white;
+            }
+            
+            .eq-col-model {
+                color: #555;
+                font-family: 'Courier New', monospace;
+            }
+            
+            .equipment-header .eq-col-model {
+                color: white;
+            }
+            
+            .eq-col-qty {
+                text-align: center;
+                font-weight: 600;
+                color: #3b82f6;
+            }
+            
+            .equipment-header .eq-col-qty {
+                color: white;
+            }
+            
+            .eq-col-maker {
+                color: #666;
+            }
+            
+            .equipment-header .eq-col-maker {
+                color: white;
+            }
+        }
+        
+        /* ===== モバイル: カード型（768px以下） ===== */
+        @media (max-width: 768px) {
+            /* ★ 設備表用カード型レイアウト（モバイルのみ） ★ */
+            
+            /* ヘッダー行を非表示 */
+            .equipment-header {
+                display: none !important;
+            }
+            
+            /* 各行をカード型に変更 */
+            .equipment-row {
+                display: block !important;
+                background: white !important;
+                border: 1px solid #e5e7eb !important;
+                border-radius: 8px !important;
+                padding: 1.25rem !important;
+                margin-bottom: 1rem !important;
+                overflow: visible !important;
+                grid-template-columns: unset !important;
+                gap: unset !important;
+                min-width: unset !important;
+                white-space: normal !important;
+            }
+            
+            /* 機種名（タイトル） */
+            .eq-col-machine {
+                display: block !important;
+                font-size: 1.1rem !important;
+                font-weight: 600 !important;
+                color: #1e3a8a !important;
+                margin-bottom: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+                border-bottom: 2px solid #e5e7eb !important;
+                padding: unset !important;
+            }
+            
+            .eq-col-machine::before {
+                content: "" !important;
+            }
+            
+            /* 型番/寸法 */
+            .eq-col-model {
+                display: block !important;
+                font-size: 0.9rem !important;
+                color: #666 !important;
+                margin-bottom: 0.5rem !important;
+                font-family: 'Courier New', monospace !important;
+                padding: unset !important;
+            }
+            
+            .eq-col-model::before {
+                content: "型番/寸法: " !important;
+                font-weight: 600 !important;
+                color: #333 !important;
+            }
+            
+            /* 台数 */
+            .eq-col-qty {
+                display: block !important;
+                font-size: 0.9rem !important;
+                color: #666 !important;
+                margin-bottom: 0.5rem !important;
+                text-align: left !important;
+                padding: unset !important;
+            }
+            
+            .eq-col-qty::before {
+                content: "台数: " !important;
+                font-weight: 600 !important;
+                color: #333 !important;
+            }
+            
+            /* メーカー */
+            .eq-col-maker {
+                display: block !important;
+                font-size: 0.9rem !important;
+                color: #666 !important;
+                padding: unset !important;
+            }
+            
+            .eq-col-maker::before {
+                content: "メーカー: " !important;
+                font-weight: 600 !important;
+                color: #333 !important;
+            }
+            
+            /* ★ 別の div::before 設定を完全に上書き ★ */
+            .equipment-row > div::before {
+                display: unset !important;
+                font-weight: unset !important;
+                color: unset !important;
+            }
+            
+            .equipment-header > div::before {
+                display: unset !important;
+            }
+            
+            /* カード内でのアクティブ効果 */
+            .equipment-row:active {
+                background: #f9fafb !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+            }
+        }
+        
+        .equipment-gallery {
+            margin-top: 3rem;
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .equipment-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .equipment-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .equipment-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .equipment-caption {
+            padding: 1rem;
+            text-align: center;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+        
+        /* 実績セクション */
+        .achievements {
+            padding: 5rem 0;
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+        }
+        
+        .achievements .section-title {
+            color: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-item {
+            padding: 2rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #60a5fa;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* 製品事例セクション */
+        .products {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-content {
+            padding: 2rem;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .product-specs {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: #555;
+            font-weight: 600;
+        }
+
+        .spec-value {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        
+        /* 品質管理体制セクション */
+        .quality {
+            padding: 5rem 0;
+            background: #f9fafb;
+        }
+
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .quality-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .quality-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .quality-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quality-icon-image {
+            width: 120px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .quality-title {
+            font-size: 1.4rem;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .quality-content {
+            text-align: left;
+        }
+
+        .quality-content p {
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .quality-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quality-list li {
+            color: #555;
+            padding: 0.7rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quality-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .quality-summary {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .quality-summary p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+        
+        /* CAD/CAM/CAEセクション */
+        .cadcamcae {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .software-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .software-category {
+            margin-bottom: 2rem;
+        }
+
+        .software-category-title {
+            font-size: 1.3rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        .software-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .software-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .software-row:last-child {
+            border-bottom: none;
+        }
+
+        .software-header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            font-weight: bold;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .software-row:not(.software-header):hover {
+            background: #f9fafb;
+        }
+
+        .software-name {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .software-header .software-name {
+            color: white;
+        }
+
+        .software-maker {
+            color: #666;
+            text-align: right;
+        }
+
+        .software-header .software-maker {
+            color: white;
+            text-align: right;
+        }
+        
+        /* 納入先実績セクション */
+        .clients {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .clients-container {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .clients-list-wrapper {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .clients-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .clients-list li {
+            color: #1e3a8a;
+            padding: 1rem;
+            padding-left: 1.8rem;
+            position: relative;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .clients-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        /* 代表者紹介セクション */
+        .representative {
+            padding: 5rem 0;
+            background: #f9fafb;
+        }
+
+        .representative-content {
+            margin-top: 3rem;
+        }
+
+        .representative-profile {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .representative-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .representative-name {
+            font-size: 1.8rem;
+            color: #1e3a8a;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .representative-bio {
+            color: #555;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .representative-bio p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .representative-expertise {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .expertise-item {
+            text-align: center;
+        }
+
+        .expertise-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .expertise-name {
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* お問い合わせセクション */
+        .contact {
+            padding: 5rem 0;
+            background: #f9fafb;
+            text-align: center;
+        }
+        
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .contact-info h3 {
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+        
+        .map-container {
+            margin-top: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* フッター */
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            /* ★ 設備表はここでは設定しない（行740-817で別途定義）★ */
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-images {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* プレス機2台の写真付きレイアウト */
+    .equipment-dual-photo {
+        display: grid;
+        grid-template-columns: 1fr 600px;
+        gap: 2rem;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+.equipment-photos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.equipment-photo {
+    position: relative;
+    overflow: hidden;
+    min-height: 250px;
+    max-height: 280px;
+}
+
+    .equipment-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .equipment-photo-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(30, 58, 138, 0.95), transparent);
+        color: white;
+        padding: 2rem 1.5rem 1rem;
+        font-weight: bold;
+    }
+
+    .equipment-photo-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .equipment-photo-desc {
+        font-size: 0.85rem;
+        font-weight: normal;
+        opacity: 0.9;
+    }
+
+    /* レスポンシブ追加 */
+    @media (max-width: 968px) {
+        .equipment-dual-photo {
+            grid-template-columns: 1fr;
+        }
+    
+        .equipment-photos-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    /* 沿革セクション */
+.history {
+    padding: 5rem 0;
+    background: white;
+}
+
+.timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, #3b82f6, #1e3a8a);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 2.5rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    border: 4px solid white;
+    box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.timeline-item.highlight::before {
+    background: #fbbf24;
+    box-shadow: 0 0 0 2px #fbbf24, 0 0 20px rgba(251, 191, 36, 0.5);
+    width: 24px;
+    height: 24px;
+    left: -10px;
+}
+
+.timeline-year {
+    font-weight: bold;
+    color: #1e3a8a;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.timeline-item:hover .timeline-content {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.timeline-title {
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.timeline-description {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* レスポンシブ追加 */
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: 1rem;
+    }
+    
+    .timeline-item {
+        padding-left: 2rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-jp">有限会社本郷工業</span>
+                <img class="logo-en" src="company_logo.png" alt="HONGŌ KŌGYŌ - YŪGEN GAISHA" style="height: 60px; width: auto;">
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">ホーム</a></li>
+                    <li><a href="#strengths">技術・強み</a></li>
+                    <li><a href="#products">製品事例</a></li>
+                    <li><a href="#quality">品質管理</a></li>
+                    <li><a href="#equipment">設備紹介</a></li>
+                    <li><a href="#clients">納入先実績</a></li>
+                    <li>
+                        <a href="#company">会社情報 ▼</a>
+                        <ul class="nav-dropdown">
+                            <li><a href="#company">会社概要</a></li>
+                            <li><a href="#history">沿革</a></li>
+                            <li><a href="#representative">代表者紹介</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+            
+            <!-- スマホ用ハンバーガーメニュー -->
+            <div class="mobile-menu-toggle">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- スマホ用モバイルナビゲーション -->
+        <ul class="nav-mobile" id="navMobile">
+            <li><a href="#home">ホーム</a></li>
+            <li><a href="#strengths">技術・強み</a></li>
+            <li><a href="#products">製品事例</a></li>
+            <li><a href="#quality">品質管理</a></li>
+            <li><a href="#equipment">設備紹介</a></li>
+            <li><a href="#clients">納入先実績</a></li>
+            <li>
+                <a href="javascript:void(0)" id="companyMenuToggle">会社情報 ▼</a>
+                <ul class="nav-mobile-submenu" id="companySubmenu">
+                    <li><a href="#company">会社概要</a></li>
+                    <li><a href="#history">沿革</a></li>
+                    <li><a href="#representative">代表者紹介</a></li>
+                </ul>
+            </li>
+            <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+    </header>
+
+    <!-- ヒーローセクション（スライドショー） -->
+    <section id="home" class="hero" style="margin-top: 80px;">
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('P1000232.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('P1000965.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('P1000936.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('P1000234.jpg');"></div>
+        </div>
+        <div class="hero-container">
+            <h1>明日の金型産業に<br>無限の可能性を</h1>
+            <p class="hero-subtitle">愛知県刈谷市のプレス金型設計・製造のスペシャリスト</p>
+            <p class="hero-description">
+                75~200tクラスの単発、順送、ラインペーサーを得意とし、最新の設備と人の技術、そして情熱を注ぎ込み、
+                高品質・短納期・低コストを実現します。
+            </p>
+            <button id="contact-btn-hero" class="cta-button">お問い合わせはこちら</button>
+        </div>
+    </section>
+
+    <!-- 強みセクション -->
+    <section id="strengths" class="strengths">
+        <div class="container">
+            <h2 class="section-title">本郷工業の3つの強み</h2>
+            <div class="strengths-grid">
+                <div class="strength-card">
+                    <img src="cad_date3.jpg" alt="高品質な製造" class="strength-image">
+                    <div class="strength-content">
+                        <div class="strength-icon">⚙️</div>
+                        <h3>高品質</h3>
+                        <p>最新のCAD/CAMシステムを活用し、豊富な経験と感性を融合させた設計で、常に最高品質の金型を製造します。人の手による丁寧な仕上げが製品に温かみを与えます。</p>
+                    </div>
+                </div>
+                <div class="strength-card">
+                    <img src="CIMG0394.jpg" alt="短納期対応" class="strength-image">
+                    <div class="strength-content">
+                        <div class="strength-icon">⚡</div>
+                        <h3>短納期</h3>
+                        <p>効率的な生産体制と最新設備により、お客様のタイトなスケジュールにも柔軟に対応。「より速く」「正確に」をモットーに、迅速な納期でお応えします。</p>
+                    </div>
+                </div>
+                <div class="strength-card">
+                    <img src="digital_caliper_measurement.jpg" alt="低コスト実現" class="strength-image">
+                    <div class="strength-content">
+                        <div class="strength-icon">💰</div>
+                        <h3>低コスト</h3>
+                        <p>無駄を排除した生産プロセスと技術革新により、高品質を保ちながらも競争力のある価格を実現。お客様の製品競争力向上に貢献します。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">当社の技術・強みについてもっと詳しく知りたい</p>
+                <a href="#contact" class="cta-button">相談してみる</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 製品事例セクション -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">製品事例</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 1.1rem;">本郷工業の確かな技術が生み出した実績をご紹介します</p>
+            <div class="products-grid">
+                <!-- 事例1: 300tクラス単発型（電気外観部品） -->
+                <div class="product-card">
+                    <img src="./ichiran_300t_seikei_tanpatu.jpg" alt="300tクラス単発型" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">300tクラス単発型</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">対応プレス:</span>
+                                <span class="spec-value">200~300t</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">精度:</span>
+                                <span class="spec-value">±0.05mm</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">納期目安:</span>
+                                <span class="spec-value">6~8週間</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">用途:</span>
+                                <span class="spec-value">電気外観部品</span>
+                            </div>
+                        </div>
+                        <p class="product-description">複雑な形状の電気外観部品に対応した大型単発金型。高精度な加工と丁寧な仕上げにより、量産時の品質を実現します。</p>
+                    </div>
+                </div>
+
+                <!-- 事例2: ダブルカム型 -->
+                <div class="product-card">
+                    <img src="./ichiran_dual_cam.jpg" alt="ダブルカム型" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">ダブルカム型（300tクラス単発型）</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">対応プレス:</span>
+                                <span class="spec-value">150~250t</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">精度:</span>
+                                <span class="spec-value">±0.03mm</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">納期目安:</span>
+                                <span class="spec-value">8~10週間</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">用途:</span>
+                                <span class="spec-value">電機・精密部品</span>
+                            </div>
+                        </div>
+                        <p class="product-description">このような構造の金型にも対応可能で、生産効率を大幅に向上させます。</p>
+                    </div>
+                </div>
+
+                <!-- 事例3: 絞り型 -->
+                <div class="product-card">
+                    <img src="./ichiran_motor_case.jpg" alt="モーターケース絞り型" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">モーターケース絞り型</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">対応プレス:</span>
+                                <span class="spec-value">75~150t</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">精度:</span>
+                                <span class="spec-value">±0.10mm</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">納期目安:</span>
+                                <span class="spec-value">5~7週間</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">用途:</span>
+                                <span class="spec-value">モーター部品</span>
+                            </div>
+                        </div>
+                        <p class="product-description">複雑な立体形状の絞り加工に特化した金型。厳密な公差管理と高度な技術により、歩留まり向上を実現します。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">ご自身のプロジェクトに合う金型についてご相談ください</p>
+                <a href="#contact" class="cta-button">ご相談はこちら</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 品質管理体制セクション -->
+    <section id="quality" class="quality">
+        <div class="container">
+            <h2 class="section-title">品質管理体制</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">小規模だからこそ実現できる、きめ細かい品質管理</p>
+            
+            <div class="quality-grid">
+                <!-- 検査項目 -->
+                <div class="quality-card">
+                    <div class="quality-icon">📋</div>
+                    <h3 class="quality-title">検査項目</h3>
+                    <div class="quality-content">
+                        <p><strong>顧客要求寸法の厳密確認</strong></p>
+                        <ul class="quality-list">
+                            <li>客先から指示された全寸法項目の検査</li>
+                            <li>板厚変化の精密測定</li>
+                            <li>絞り・曲げ部の丸みの滑らかさ確認</li>
+                            <li>表面粗度の検査</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 検査機器 -->
+                <div class="quality-card">
+                    <img src="digital_nogisu.png" alt="検査機器" class="quality-icon-image">
+                    <h3 class="quality-title">検査機器</h3>
+                    <div class="quality-content">
+                        <p><strong>充実した測定・検査機器</strong></p>
+                        <ul class="quality-list">
+                            <li>精密測定具（ハイトゲージ、キャリパー等）</li>
+                            <li>客先支給検査治具 — 顧客要求に完全対応</li>
+                            <li>3Dプリンタ — 複雑形状の検証確認</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 検査プロセス -->
+                <div class="quality-card">
+                    <div class="quality-icon">✓</div>
+                    <h3 class="quality-title">検査プロセス</h3>
+                    <div class="quality-content">
+                        <p><strong>経験と改善による品質保証</strong></p>
+                        <ul class="quality-list">
+                            <li>過去の経験を設計段階に織り込み</li>
+                            <li>検査不具合の即座の形状変更対応</li>
+                            <li>各工程での段階的な品質確認</li>
+                            <li>納入前の最終確認チェック</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quality-summary">
+                <p>小規模だからこそ、一型一型に丁寧な対応ができます。顧客の要求に応じた厳密な品質管理と、迅速な改善対応が本郷工業の強みです。</p>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">当社の品質管理体制についてもっと知りたい</p>
+                <a href="#contact" class="cta-button">詳しく相談する</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 設備紹介セクション -->
+    <section id="equipment" class="equipment">
+        <div class="container">
+            <h2 class="section-title">最新設備のご紹介</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 3rem;">高精度な金型製造を支える充実の設備ラインナップ</p>
+            
+            <div class="equipment-category">
+                <h3 class="equipment-category-title">プレス機</h3>
+                <div class="equipment-table">
+                    <div class="equipment-row equipment-header">
+                        <div class="eq-col-machine">機種仕様</div>
+                        <div class="eq-col-model">型番 / 寸法</div>
+                        <div class="eq-col-qty">台数</div>
+                        <div class="eq-col-maker">メーカー</div>
+
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">200T プレス</div>
+                        <div class="eq-col-model">SSCP-200-A</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">ANDOH</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">100T プレス</div>
+                        <div class="eq-col-model">PUX100</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">ワシノ</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">75T プレス</div>
+                        <div class="eq-col-model">PUX75</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">ワシノ</div>
+                    </div>
+                </div>
+
+            <div class="equipment-photos-grid">
+                <div class="equipment-photo">
+                    <img src="press_200t.jpeg" alt="200Tプレス SSCP-200-A">
+                    <div class="equipment-photo-caption">
+                        <div class="equipment-photo-title">200T プレス SSCP-200-A</div>
+                        <div class="equipment-photo-desc">ANDOH製 | 大型金型対応の主力設備</div>
+                    </div>
+                </div>
+                <div class="equipment-photo">
+                    <img src="100t_press.jpg" alt="100Tプレス PUX100">
+                    <div class="equipment-photo-caption">
+                    <div class="equipment-photo-title">100T プレス PUX100</div>
+                    <div class="equipment-photo-desc">ワシノ製 | 高精度な金型製造の主力設備</div>
+                </div>
+            </div>
+         </div>
+            </div>
+
+            <div class="equipment-category">
+                <h3 class="equipment-category-title">マシニングセンタ・フライス盤</h3>
+                <div class="equipment-table">
+                    <div class="equipment-row equipment-header">
+                        <div class="eq-col-machine">機種仕様</div>
+                        <div class="eq-col-model">型番 / 寸法</div>
+                        <div class="eq-col-qty">台数</div>
+                        <div class="eq-col-maker">メーカー</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">マシニング</div>
+                        <div class="eq-col-model">MCV660MC/TC (1270x660)</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">OKK</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">マシニング</div>
+                        <div class="eq-col-model">VM5-Ⅱ (1050x520)</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">OKK</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">倣いフライス</div>
+                        <div class="eq-col-model">MHA-400TCV</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">OKK</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">汎用フライス</div>
+                        <div class="eq-col-model">STM2V</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">大隈豊和</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-category">
+                <h3 class="equipment-category-title">ワイヤーカット・研磨機</h3>
+                <div class="equipment-table">
+                    <div class="equipment-row equipment-header">
+                        <div class="eq-col-machine">機種仕様</div>
+                        <div class="eq-col-model">型番 / 寸法</div>
+                        <div class="eq-col-qty">台数</div>
+                        <div class="eq-col-maker">メーカー</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">ワイヤーカット</div>
+                        <div class="eq-col-model">ROBO CUT α-1iC</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">FANUC</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">ワイヤーカット</div>
+                        <div class="eq-col-model">ROBO CUT α-0iA</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">FANUC</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">平面研磨機</div>
+                        <div class="eq-col-model">PSG64EN (600X300)</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">岡本工作機械</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">成型研磨機</div>
+                        <div class="eq-col-model">GS-BM2 (500X150)</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">黒田精工</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-category">
+                <h3 class="equipment-category-title">その他設備</h3>
+                <div class="equipment-table">
+                    <div class="equipment-row equipment-header">
+                        <div class="eq-col-machine">機種仕様</div>
+                        <div class="eq-col-model">型番 / 寸法</div>
+                        <div class="eq-col-qty">台数</div>
+                        <div class="eq-col-maker">メーカー</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">コンター</div>
+                        <div class="eq-col-model">V-400</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">AMADA</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">バンドソー</div>
+                        <div class="eq-col-model">-</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">AMADA</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">旋盤</div>
+                        <div class="eq-col-model">STRONG650</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">豊和</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">旋盤</div>
+                        <div class="eq-col-model">6尺</div>
+                        <div class="eq-col-qty">1</div>
+                        <div class="eq-col-maker">森精機</div>
+                    </div>
+                    <div class="equipment-row">
+                        <div class="eq-col-machine">ラジアルボール盤</div>
+                        <div class="eq-col-model">-</div>
+                        <div class="eq-col-qty">2</div>
+                        <div class="eq-col-maker">吉田</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-gallery" style="margin-top: 3rem;">
+                <h3 style="text-align: center; color: #1e3a8a; margin-bottom: 2rem;">設備写真ギャラリー</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="75t_press.jpg" alt="プレス設備" class="equipment-image">
+                        <div class="equipment-caption">プレス設備</div>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="stm2v_1.jpg" alt="加工機械" class="equipment-image">
+                        <div class="equipment-caption">加工機械</div>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="kuroda_seikei_kenma.jpg" alt="精密機器" class="equipment-image">
+                        <div class="equipment-caption">精密機器</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAD/CAM/CAEサブセクション -->
+            <div style="margin-top: 3rem; padding-top: 3rem; border-top: 2px solid #e5e7eb;">
+                <h3 style="font-size: 1.8rem; color: #1e3a8a; text-align: center; margin-bottom: 1rem;">CAD/CAM/CAE システム</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">最新の設計・解析・製造ソフトウェアを完備</p>
+                
+                <div class="software-categories">
+                    <!-- 3次元CAD/CAM -->
+                    <div class="software-category">
+                        <h4 class="software-category-title">3次元 CAD/CAM</h4>
+                        <div class="software-table">
+                            <div class="software-row software-header">
+                                <div class="software-name">ソフトウェア名</div>
+                                <div class="software-maker">メーカー</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">CAM-TOOL</div>
+                                <div class="software-maker">C&G SYSTEM</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">MYPAC BASIS</div>
+                                <div class="software-maker">倉敷機械</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3次元CAD -->
+                    <div class="software-category">
+                        <h4 class="software-category-title">3次元 CAD</h4>
+                        <div class="software-table">
+                            <div class="software-row software-header">
+                                <div class="software-name">ソフトウェア名</div>
+                                <div class="software-maker">メーカー</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">Rhinoceros v6</div>
+                                <div class="software-maker">アプリクラフト</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 解析 -->
+                    <div class="software-category">
+                        <h4 class="software-category-title">解析</h4>
+                        <div class="software-table">
+                            <div class="software-row software-header">
+                                <div class="software-name">ソフトウェア名</div>
+                                <div class="software-maker">メーカー</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">FAST BLANK</div>
+                                <div class="software-maker">FTI</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2次元CAD/CAM -->
+                    <div class="software-category">
+                        <h4 class="software-category-title">2次元 CAD/CAM</h4>
+                        <div class="software-table">
+                            <div class="software-row software-header">
+                                <div class="software-name">ソフトウェア名</div>
+                                <div class="software-maker">メーカー</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">Excess Hybrid 2</div>
+                                <div class="software-maker">C&G SYSTEM</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">ナスカプロ</div>
+                                <div class="software-maker">GODO SOLUTION</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">ナスカ V2</div>
+                                <div class="software-maker">ゴードーソリューション</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2次元CAD -->
+                    <div class="software-category">
+                        <h4 class="software-category-title">2次元 CAD</h4>
+                        <div class="software-table">
+                            <div class="software-row software-header">
+                                <div class="software-name">ソフトウェア名</div>
+                                <div class="software-maker">メーカー</div>
+                            </div>
+                            <div class="software-row">
+                                <div class="software-name">図脳RAPID PRO</div>
+                                <div class="software-maker">PHOTRON</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">当社の最新設備についてご質問やご相談はこちら</p>
+                <button id="contact-btn-company" href="#contact" class="cta-button">お問い合わせ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 納入先実績セクション -->
+    <section id="clients" class="clients">
+        <div class="container">
+            <h2 class="section-title">納入先実績</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">多くの優良企業との信頼の実績</p>
+            
+            <div class="clients-container">
+                <div class="clients-list-wrapper">
+                    <ul class="clients-list">
+                        <li>(株)山崎工業</li>
+                        <li>(株)明和工業</li>
+                        <li>(株)スズキプレス</li>
+                        <li>(株)福富金属</li>
+                        <li>(株)ミカネ</li>
+                        <li>(株)水野工業</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会社情報セクション -->
+    <section id="company" class="company-info">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-content">
+                    <h2>技術と情熱で未来を創造</h2>
+                    <p>
+                        金型製作において最も重要な設計工程では、多くの知識を駆使し、ニーズを的確に読み取る感性が必要です。
+                        私たちは早期からCAD/CAMを導入し、インターネット技術も積極的に取り入れてきました。
+                    </p>
+                    <p>
+                        受信したデータに<span class="highlight">経験と感性を加味</span>し、納得いくまで造り込むことで、
+                        常に新技術へ挑戦する「新たな価値を創出する」という本郷工業のポリシーを体現しています。
+                    </p>
+                    <p>
+                        最終工程である仕上げにおいても、人の手でひとつひとつ丁寧に行い、
+                        <span class="highlight">製品の持つ「温かみ」</span>を大切にしています。
+                    </p>
+                </div>
+                <div class="info-images">
+                    <img src="P1000232.jpg" alt="工場内部1" class="info-image large">
+                    <img src="P1000965.jpg" alt="工場内部2" class="info-image">
+                    <img src="P1000936.jpg" alt="工場内部3" class="info-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 沿革セクション -->
+    <section id="history" class="history">
+    <div class="container">
+        <h2 class="section-title">沿革</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">
+            昭和59年の創業以来、40年以上にわたり金型製造一筋<br>
+            常に最新技術を取り入れ、お客様と共に成長してまいりました
+        </p>
+        <div class="timeline">
+            <div class="timeline-item highlight">
+                <div class="timeline-year">昭和59年10月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">本郷工業 設立</div>
+                    <div class="timeline-description">金型製造事業を開始</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item highlight">
+                <div class="timeline-year">昭和63年7月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">倣い加工機導入 / 有限会社本郷工業 創業</div>
+                    <div class="timeline-description">法人化し、本格的な事業展開へ</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成2年6月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">200トンプレス導入</div>
+                    <div class="timeline-description">大型金型製作への対応を開始</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成8年8月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">MCV660 (OKK製) 導入</div>
+                    <div class="timeline-description">マシニングセンタによる高精度加工を実現</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成10年5月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">平面研磨機 更新</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成11年4月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">本社工場 増築</div>
+                    <div class="timeline-description">生産能力の拡大</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成11年6月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">3次元CAD/CAM 導入</div>
+                    <div class="timeline-description">設計・加工の高度化を推進</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成12年5月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">2次元CAD/CAM 追加導入</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成13年1月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">2次元CAD/CAM 追加導入</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成15年3月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">100トンプレス導入</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成15年6月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">VM5-Ⅱ (OKK製) 導入</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成16年3月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">3次元CAD/CAM 追加導入</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">平成18年3月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">ワイヤーカット更新</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item highlight">
+                <div class="timeline-year">平成23年8月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">隣地に第二工場取得</div>
+                    <div class="timeline-description">事業拡大による生産体制の強化</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">令和元年9月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">2次元CAD/CAM 新規導入</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">令和2年9月</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">2次元CAD/CAM 追加導入</div>
+                    <div class="timeline-description">設計体制のさらなる強化</div>
+                </div>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">40年の歩みと実績についてもっと詳しく知りたい</p>
+                <button id="contact-btn-equipment" href="#contact" class="cta-button">お問い合わせはこちら</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- 代表者紹介セクション -->
+    <section id="representative" class="representative">
+        <div class="container">
+            <h2 class="section-title">代表者紹介</h2>
+            
+            <div class="representative-content">
+                <div class="representative-profile">
+                    <div class="representative-info">
+                        <h3 class="representative-name">代表取締役</h3>
+                        <div class="representative-bio">
+                            <p>本郷工業への入社以来、一筋に金型製造と向き合ってきた代表者。入社から現在まで、金型設計、CAD/CAM、加工に至るすべての工程に携わり、豊富な経験と深い専門知識を身につけています。</p>
+                            <p>金型製造の全工程を知り尽くすことで、設計の段階から製造、検査に至るまで、トータルな視点で品質を追求。この全方位的なアプローチが、本郷工業の「高品質・短納期・低コスト」の実現を支えています。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 代表者の専門分野を4項目で表現 -->
+                <div class="representative-expertise-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div class="expertise-card">
+                        <img src="kosou_sekkei.png" alt="構想設計" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+                        <h3 style="text-align: center; color: #1e3a8a; font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">構想設計</h3>
+                        <p style="text-align: center; font-size: 0.9rem; color: #666; line-height: 1.6;">今までの経験を設計に落とし込む</p>
+                    </div>
+                    <div class="expertise-card">
+                        <img src="3dcad.jpg" alt="金型設計" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+                        <h3 style="text-align: center; color: #1e3a8a; font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">金型設計</h3>
+                        <p style="text-align: center; font-size: 0.9rem; color: #666; line-height: 1.6;">最新の3D CAD/CAMで精密設計を実現</p>
+                    </div>
+                    <div class="expertise-card">
+                        <img src="kakou_genba2.jpg" alt="加工・製造" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+                        <h3 style="text-align: center; color: #1e3a8a; font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">加工・製造</h3>
+                        <p style="text-align: center; font-size: 0.9rem; color: #666; line-height: 1.6;">詳細な設計図から高精度な加工を実施</p>
+                    </div>
+                    <div class="expertise-card">
+                        <img src="measure.jpg" alt="品質管理" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+                        <h3 style="text-align: center; color: #1e3a8a; font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">品質管理</h3>
+                        <p style="text-align: center; font-size: 0.9rem; color: #666; line-height: 1.6;">精密測定で信頼の品質を保証</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">本郷工業について詳しくお知りになりたい方は</p>
+                <button id="contact-btn-cases" href="#contact" class="cta-button">こちらからお問い合わせ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 実績セクション -->
+    <section id="achievements" class="achievements">
+        <div class="container">
+            <h2 class="section-title">確かな実績と信頼</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">200t</span>
+                    <div class="stat-label">トライプレス能力</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">300t</span>
+                    <div class="stat-label">受注実績クラス</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">30+</span>
+                    <div class="stat-label">年間の豊富な経験</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <div class="stat-label">顧客満足への追求</div>
+                </div>
+            </div>
+
+            <!-- セクション末尾CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+                <p style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; font-weight: 600;">本郷工業の実績と信頼について詳しく</p>
+                <button id="contact-btn-footer" href="#contact" class="cta-button">相談・見学のお申し込み</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせセクション -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">お問い合わせ</h2>
+            <div class="contact-content">
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">プレス金型の設計・製造に関するご相談は、お気軽にお問い合わせください。</p>
+                
+                <!-- 改善後　インラインスタイル版 -->
+                <div style="background: linear-gradient(to right, #1e3a8a, #2563eb); color: white; padding: 2rem; margin-bottom: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); box-sizing: border-box;">
+                    <h3 style="color: #fff; font-size: 1.875rem; font-weight: bold; margin-bottom: 2rem;">お問い合わせフォーム</h3>
+                    <form id="contact-form" method="POST" action="qform_handler_with_attachment_v2.php" enctype="multipart/form-data" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+                        <!-- セッショントークン（CSRF対策） -->
+                        <input type="hidden" name="session_token" id="session_token" value="">
+                        
+                        <!-- Honeypot フィールド（ボット対策） -->
+                        <div style="position: absolute; left: -9999px;">
+                            <input type="text" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <!-- 会社名 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">会社名 <span style="color: #ffeb3b;">*</span></label>
+                            <input type="text" name="company" placeholder="株式会社〇〇" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; transition: border-color 0.3s ease;">
+                        </div>
+
+                        <!-- お名前 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">お名前 <span style="color: #ffeb3b;">*</span></label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; box-sizing: border-box;">
+                                <input type="text" name="name_sei" placeholder="姓" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif;">
+                                <input type="text" name="name_mei" placeholder="名" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif;">
+                            </div>
+                        </div>
+
+                        <!-- フリガナ -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">フリガナ <span style="color: #ffeb3b;">*</span></label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; box-sizing: border-box;">
+                                <input type="text" name="name_kana_sei" placeholder="セイ" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif;">
+                                <input type="text" name="name_kana_mei" placeholder="メイ" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif;">
+                            </div>
+                        </div>
+
+                        <!-- 部署・職位 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">部署・職位</label>
+                            <input type="text" name="department" placeholder="例）製造部 課長" style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; transition: border-color 0.3s ease;">
+                        </div>
+
+                        <!-- 電話番号 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">電話番号 <span style="color: #ffeb3b;">*</span></label>
+                            <input type="tel" name="phone" placeholder="09012345678" pattern="[0-9\-]*" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; transition: border-color 0.3s ease;">
+                        </div>
+
+                        <!-- メールアドレス -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">メールアドレス <span style="color: #ffeb3b;">*</span></label>
+                            <input type="email" name="email" placeholder="example@company.jp" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; transition: border-color 0.3s ease;">
+                        </div>
+
+                        <!-- メールアドレス確認 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">メールアドレス（確認用） <span style="color: #ffeb3b;">*</span></label>
+                            <input type="email" name="email_confirm" placeholder="example@company.jp" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; transition: border-color 0.3s ease;">
+                        </div>
+
+                        <!-- ご希望内容（複数選択） -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.8rem; font-weight: 600; color: #fff;">ご希望内容 <span style="color: #ffeb3b;">*</span></label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; box-sizing: border-box;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: normal; color: #fff;">
+                                    <input type="checkbox" name="inquiry_type[]" value="見積依頼" style="cursor: pointer; width: 1rem; height: 1rem; flex-shrink: 0;">
+                                    <span>見積依頼</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: normal; color: #fff;">
+                                    <input type="checkbox" name="inquiry_type[]" value="技術相談" style="cursor: pointer; width: 1rem; height: 1rem; flex-shrink: 0;">
+                                    <span>技術相談</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: normal; color: #fff;">
+                                    <input type="checkbox" name="inquiry_type[]" value="工場見学" style="cursor: pointer; width: 1rem; height: 1rem; flex-shrink: 0;">
+                                    <span>工場見学</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: normal; color: #fff;">
+                                    <input type="checkbox" name="inquiry_type[]" value="その他" style="cursor: pointer; width: 1rem; height: 1rem; flex-shrink: 0;">
+                                    <span>その他</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- お問い合わせ内容 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">お問い合わせ内容 <span style="color: #ffeb3b;">*</span></label>
+                            <textarea name="message" placeholder="【お問い合わせ内容】&#10;・品番、数量、納期などの詳細&#10;・特別な要望や条件&#10;・その他ご質問&#10;&#10;例）&#10;プレス金型：200tクラス、順送型&#10;数量：月産1,000個&#10;納期：2025年1月末まで&#10;材質：SUS304&#10;その他：試作対応可能かご確認ください" required rows="7" style="width: 100%; box-sizing: border-box; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; color: #333; font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; resize: vertical; transition: border-color 0.3s ease;"></textarea>
+                        </div>
+
+                        <!-- ファイル添付 -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #fff;">図面・資料の添付（オプション）</label>
+                            <div style="border: 2px dashed #60a5fa; border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer; background: rgba(96, 165, 250, 0.05); transition: all 0.3s ease;" id="file-drop-area">
+                                <input type="file" name="attachments[]" id="file-input" multiple accept=".pdf,.docx,.xlsx,.zip,.iges,.igs,.step,.stp,.dxf,.dwg,.txt" style="display: none;">
+                                <div style="pointer-events: none;">
+                                    <p style="margin-bottom: 0.5rem; color: #fff; font-weight: 600;">ファイルを選択またはドラッグ＆ドロップ</p>
+                                    <p style="font-size: 0.85rem; color: #e0e0e0; margin-bottom: 0.75rem;">
+                                        対応形式: PDF, DOCX, XLSX, ZIP,<br>
+                                        IGES, STEP, DXF, DWG, TXT
+                                    </p>
+                                    <p style="font-size: 0.8rem; color: #b0b0b0;">
+                                        ファイルサイズ: 1ファイル最大4MB、合計10MB以内
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="file-list" style="margin-top: 1rem; display: none;">
+                                <p style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">添付ファイル:</p>
+                                <ul id="file-items" style="list-style: none; padding: 0; font-size: 0.9rem;"></ul>
+                            </div>
+                            <div id="file-error" style="display: none; background: #ffecec; color: #ff6b6b; padding: 0.75rem; border-radius: 6px; margin-top: 0.75rem; font-size: 0.9rem;"></div>
+                        </div>
+
+                        <!-- 同意確認 -->
+                        <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                            <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; font-weight: normal;">
+                                <input type="checkbox" name="agree_terms" value="yes" required style="margin-top: 0.25rem; cursor: pointer; width: 1rem; height: 1rem;">
+                                <span style="font-size: 0.95rem; color: #fff;">
+                                    <a href="javascript:void(0)" id="privacy-policy-link" style="color: #60a5fa; text-decoration: underline; cursor: pointer;">プライバシーポリシー</a>に同意します
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- エラーメッセージ表示エリア -->
+                        <div id="form-error" style="display: none; background: #ff6b6b; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;"></div>
+
+                        <!-- 入力画面ボタン -->
+                        <div id="input-screen-buttons" style="display: flex; gap: 1rem;">
+                            <button type="button" id="confirm-btn" style="flex: 1; padding: 1rem; background: white; color: #1e3a8a; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255, 255, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                確認する
+                            </button>
+                        </div>
+
+                        <!-- 送信中表示 -->
+                        <div id="form-submitting" style="display: none; text-align: center; margin-top: 1rem; color: #60a5fa;">
+                            <p>送信中...</p>
+                        </div>
+                    </form>
+
+                    <!-- ===== プライバシーポリシー モーダルダイアログ ===== -->
+                    <div id="privacy-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 2000; overflow-y: auto; cursor: pointer;">
+                        <div style="display: flex; justify-content: center; align-items: flex-start; min-height: 100%; padding: 2rem; pointer-events: none;">
+                            <div style="background: white; border-radius: 12px; width: 100%; max-width: 600px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); margin-top: 2rem; pointer-events: auto;">
+                                <!-- モーダルヘッダー -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #1e3a8a;">プライバシーポリシー</h2>
+                                    <button id="privacy-close-btn" type="button" style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; padding: 0; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center;">×</button>
+                                </div>
+
+                                <!-- モーダルコンテンツ -->
+                                <div style="padding: 2rem; color: #333; line-height: 1.8; max-height: 60vh; overflow-y: auto;">
+                                    <!-- 1. 利用目的 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">1. 個人情報の利用目的</h3>
+                                        <p style="margin: 0; color: #555;">当社は、お問い合わせへの対応のため、以下の個人情報をお客様から取得いたします。取得した個人情報は、お問い合わせへの対応目的のみに使用いたします。</p>
+                                    </div>
+
+                                    <!-- 2. 情報の管理 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">2. 個人情報の管理</h3>
+                                        <p style="margin: 0; color: #555;">当社では、お客様の個人情報を以下のとおり厳重に管理いたします。</p>
+                                        <ul style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
+                                            <li style="margin-bottom: 0.3rem; color: #555;">SSL/TLSによる暗号化通信の使用</li>
+                                            <li style="margin-bottom: 0.3rem; color: #555;">セキュアサーバーでの管理</li>
+                                            <li style="margin-bottom: 0.3rem; color: #555;">従業員の秘密保持契約</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 3. 保有期間 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">3. 個人情報の保有期間</h3>
+                                        <p style="margin: 0; color: #555;">お客様からいただいた個人情報は、対応完了までの間、当社の電子システムに保管いたします。対応完了後は、適切に破棄または匿名化いたします。</p>
+                                    </div>
+
+                                    <!-- 4. 第三者提供 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">4. 第三者への提供</h3>
+                                        <p style="margin: 0; color: #555;">当社は、法令に基づく要請がない限り、お客様の個人情報を第三者に提供することはございません。</p>
+                                    </div>
+
+                                    <!-- 5. 管理責任者 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">5. 個人情報管理責任者</h3>
+                                        <p style="margin: 0; color: #555;">有限会社本郷工業 代表取締役</p>
+                                    </div>
+
+                                    <!-- 6. 個人情報開示請求 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">6. 個人情報開示請求</h3>
+                                        <p style="margin: 0; color: #555;">お客様が、ご自身の個人情報の開示・訂正・削除をご希望される場合は、以下のお問い合わせ先までご連絡ください。</p>
+                                    </div>
+
+                                    <!-- 7. お問い合わせ先 -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">7. お問い合わせ先</h3>
+                                        <p style="margin: 0; color: #555;">有限会社本郷工業<br>メール：info@u-hongo.co.jp</p>
+                                    </div>
+
+                                    <!-- 8. ポリシー更新 -->
+                                    <div style="margin-bottom: 0;">
+                                        <h3 style="font-size: 1rem; font-weight: bold; color: #1e3a8a; margin-bottom: 0.5rem;">8. プライバシーポリシーの変更</h3>
+                                        <p style="margin: 0; color: #555;">当社は、必要に応じてこのプライバシーポリシーを予告なく変更することがあります。最新版は本ウェブサイトに掲載されます。</p>
+                                    </div>
+                                </div>
+
+                                <!-- モーダルフッター -->
+                                <div style="padding: 1.5rem; border-top: 1px solid #e5e7eb; display: flex; gap: 1rem; justify-content: flex-end;">
+                                    <button id="privacy-agree-btn" type="button" style="padding: 0.75rem 1.5rem; background: #1e3a8a; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.3s;">同意する</button>
+                                    <button id="privacy-disagree-btn" type="button" style="padding: 0.75rem 1.5rem; background: #e5e7eb; color: #333; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.3s;">閉じる</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="confirmation-wrapper" style="display: none;">
+                        <h3 id="confirmation-title" style="color: #fff; font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center; padding-top: 3rem;">入力内容の確認</h3>
+                        <div id="confirmation-screen" style="display: none;">
+                        
+                            <!-- 確認画面テーブル -->
+                            <div style="background: white; border-radius: 8px; overflow: hidden; margin-bottom: 2rem;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; width: 30%; color: #333;">会社名</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-word; overflow-wrap: break-word;" id="confirm-company">-</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">お名前</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-word; overflow-wrap: break-word;" id="confirm-name">-</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">フリガナ</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-word; overflow-wrap: break-word;" id="confirm-kana">-</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">部署・職位</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-word; overflow-wrap: break-word;" id="confirm-department">-</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">電話番号</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-word; overflow-wrap: break-word;" id="confirm-phone">-</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">メールアドレス</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-all; overflow-wrap: break-word;" id="confirm-email">-</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e5e7eb;">
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">ご希望内容</td>
+                                    <td style="padding: 1rem; color: #333; word-break: break-word; overflow-wrap: break-word;" id="confirm-inquiry">-</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">お問い合わせ内容</td>
+                                    <td style="padding: 1rem; color: #333; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word;" id="confirm-message">-</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1rem; background: #f3f4f6; font-weight: 600; color: #333;">プライバシーポリシー同意</td>
+                                    <td style="padding: 1rem; color: #333;" id="confirm-agree-terms">確認中...</td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <!-- 確認画面ボタン -->
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="button" id="edit-btn" style="flex: 1; padding: 1rem; background: #60a5fa; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(96, 165, 250, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                編集する
+                            </button>
+                            <button type="button" id="final-submit-btn" style="flex: 1; padding: 1rem; background: white; color: #1e3a8a; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255, 255, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                送信する
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- ===== プライバシーポリシーモーダル ===== -->
+                    <div id="privacy-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; overflow-y: auto;">
+                        <div style="display: flex; justify-content: center; align-items: flex-start; min-height: 100%; padding: 2rem 1rem;">
+                            <div style="background: white; border-radius: 12px; max-width: 700px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                                <!-- モーダルヘッダー -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 2rem; border-bottom: 2px solid #e5e7eb; position: sticky; top: 0; background: white;">
+                                    <h2 style="font-size: 1.5rem; font-weight: bold; color: #1e3a8a; margin: 0;">プライバシーポリシー</h2>
+                                    <button type="button" id="close-privacy-modal" style="background: none; border: none; font-size: 2rem; color: #999; cursor: pointer; padding: 0; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center;">
+                                        ✕
+                                    </button>
+                                </div>
+
+                                <!-- モーダルコンテンツ -->
+                                <div style="padding: 2rem; color: #333; line-height: 1.8; font-size: 0.95rem;">
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">1. 個人情報について</h3>
+                                    <p>有限会社本郷工業（以下「当社」）は、当ウェブサイトを通じて提供いただく個人情報を大切に取り扱っております。</p>
+
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. 個人情報の利用目的</h3>
+                                    <p>当サイトを通じて取得された個人情報は、以下の目的のためにのみ利用いたします。</p>
+                                    <ul style="margin-left: 1rem;">
+                                        <li>お問い合わせ内容への対応</li>
+                                        <li>お客様からのご質問への回答</li>
+                                        <li>請求書や納品書などの送付</li>
+                                    </ul>
+
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">3. 個人情報の管理</h3>
+                                    <p>当社は、個人情報を厳密に管理し、以下の対策を実施しています。</p>
+                                    <ul style="margin-left: 1rem;">
+                                        <li>SSL/TLSによる通信暗号化</li>
+                                        <li>セキュアなサーバーで安全に保管</li>
+                                        <li>従業員の秘密保持契約による管理</li>
+                                        <li>不正アクセスの防止</li>
+                                    </ul>
+
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">4. 個人情報の保有期間</h3>
+                                    <p>当社がお預かりした個人情報は、お問い合わせへのご対応が完了するまで保有いたします。対応完了後は、法的根拠がない限り、速やかに削除または匿名化いたします。</p>
+
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">5. 第三者への提供</h3>
+                                    <p>当社は、法的根拠がない限り、いかなる第三者にも個人情報を提供いたしません。</p>
+
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">6. お客様の権利</h3>
+                                    <p>お客様は、ご自身の個人情報について、以下のご請求をすることができます。</p>
+                                    <ul style="margin-left: 1rem;">
+                                        <li>開示請求</li>
+                                        <li>訂正請求</li>
+                                        <li>削除請求</li>
+                                        <li>利用停止請求</li>
+                                    </ul>
+                                    <p>ご不明な点やご請求は、下記までお気軽にお問い合わせください。</p>
+
+                                    <h3 style="color: #1e3a8a; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem;">7. お問い合わせ</h3>
+                                    <p>個人情報の取り扱いに関するご質問やご不明な点は、以下までお問い合わせください。</p>
+                                    <p style="margin-top: 1rem; font-weight: 600;">
+                                        有限会社本郷工業 代表取締役<br>
+                                        〒448-0813 愛知県刈谷市小垣江町本郷下51-19<br>
+                                        メール：<a href="mailto:info@u-hongo.co.jp" style="color: #2563eb; text-decoration: underline;">info@u-hongo.co.jp</a>
+                                    </p>
+
+                                    <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb; font-size: 0.85rem; color: #666;">
+                                        最終更新日：2025年11月12日
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <h3>工場見学も受付中</h3>
+                    <p>応募の有無は問いません。<br>実際の製造現場をご覧いただけます。</p>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.95rem;">※工場見学のお申し込みもお問い合わせフォームからお願いいたします</p>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>所在地</h3>
+                    <p>〒448-0813<br>
+                    愛知県刈谷市小垣江町本郷下51-19</p>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps?q=愛知県刈谷市小垣江町本郷下51-19&output=embed&z=16" width="100%" height="300" style="border:0; border-radius: 10px; margin-top: 1rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">75~200tクラスの単発、順送、ラインペーサー対応</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 有限会社本郷工業. All Rights Reserved.</p>
+            <p>愛知県刈谷市でプレス金型を設計、製造しています。</p>
+        </div>
+    </footer>
+
+    <script>
+        // スムーススクロール - ヘッダー高さ考慮版
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // ヘッダー高さ分のオフセットを追加（100px）
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ヘッダーの背景色変更（スクロール時）
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(30, 58, 138, 0.95)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)';
+            }
+        });
+
+        // ヒーロースライドショー
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000); // 5秒ごとに切り替え
+
+        // カードのアニメーション
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.strength-card, .equipment-item').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // ============================================================
+        // ファイル添付機能 - ドラッグ&ドロップ対応
+        // ============================================================
+
+        const fileDropArea = document.getElementById('file-drop-area');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+        const fileItems = document.getElementById('file-items');
+        const fileError = document.getElementById('file-error');
+
+        // 対応ファイル形式
+        const allowedExtensions = ['pdf', 'docx', 'xlsx', 'zip', 'iges', 'igs', 'step', 'stp', 'dxf', 'dwg', 'txt'];
+        const maxFileSize = 4 * 1024 * 1024; // 4MB
+        const maxTotalSize = 10 * 1024 * 1024; // 10MB
+
+        // ファイル形式チェック
+        function isValidFileType(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            return allowedExtensions.includes(ext);
+        }
+
+        // ファイル情報表示
+        function displayFileList() {
+            fileItems.innerHTML = '';
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                fileList.style.display = 'none';
+                return;
+            }
+
+            fileList.style.display = 'block';
+            let totalSize = 0;
+
+            Array.from(files).forEach((file, index) => {
+                totalSize += file.size;
+                const size = (file.size / 1024).toFixed(2);
+                const li = document.createElement('li');
+                li.style.cssText = 'margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(96, 165, 250, 0.05); border-radius: 4px;';
+                li.innerHTML = `
+                    <span>${file.name} (${size} KB)</span>
+                    <button type="button" onclick="removeFile(${index})" style="background: #ff6b6b; color: white; border: none; padding: 0.25rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">削除</button>
+                `;
+                fileItems.appendChild(li);
+            });
+
+            // 合計サイズ表示
+            const totalSizeKB = (totalSize / 1024).toFixed(2);
+            const totalSizeSpan = document.createElement('li');
+            totalSizeSpan.style.cssText = 'margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #ddd; font-weight: 600; color: #1e3a8a;';
+            totalSizeSpan.innerHTML = `合計: ${totalSizeKB} KB / ${(maxTotalSize / 1024 / 1024).toFixed(1)} MB`;
+            fileItems.appendChild(totalSizeSpan);
+        }
+
+        // ファイル削除
+        window.removeFile = function(index) {
+            const dataTransfer = new DataTransfer();
+            Array.from(fileInput.files).forEach((file, i) => {
+                if (i !== index) {
+                    dataTransfer.items.add(file);
+                }
+            });
+            fileInput.files = dataTransfer.files;
+            displayFileList();
+            fileError.style.display = 'none';
+        };
+
+        // ファイル検証
+        function validateFiles() {
+            fileError.style.display = 'none';
+            fileError.innerHTML = '';
+            const files = fileInput.files;
+
+            if (files.length === 0) {
+                return true; // ファイルは選択オプション
+            }
+
+            let totalSize = 0;
+
+            for (let file of files) {
+                // ファイル形式チェック
+                if (!isValidFileType(file.name)) {
+                    fileError.innerHTML = `❌ ファイル形式が対応していません: ${file.name}<br>対応形式: ${allowedExtensions.join(', ')}`;
+                    fileError.style.display = 'block';
+                    return false;
+                }
+
+                // ファイルサイズチェック（個別）
+                if (file.size > maxFileSize) {
+                    const sizeInfo = (file.size / 1024 / 1024).toFixed(2);
+                    fileError.innerHTML = `❌ ファイルサイズが大きすぎます: ${file.name} (${sizeInfo}MB)<br>最大: 4MB`;
+                    fileError.style.display = 'block';
+                    return false;
+                }
+
+                totalSize += file.size;
+            }
+
+            // 合計サイズチェック
+            if (totalSize > maxTotalSize) {
+                const totalInfo = (totalSize / 1024 / 1024).toFixed(2);
+                fileError.innerHTML = `❌ ファイルの合計サイズが大きすぎます (${totalInfo}MB)<br>最大: 10MB以内`;
+                fileError.style.display = 'block';
+                return false;
+            }
+
+            return true;
+        }
+
+        // ドラッグ&ドロップイベント
+        if (fileDropArea) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileDropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileDropArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileDropArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                fileDropArea.style.background = 'rgba(96, 165, 250, 0.15)';
+                fileDropArea.style.borderColor = '#2563eb';
+            }
+
+            function unhighlight(e) {
+                fileDropArea.style.background = 'rgba(96, 165, 250, 0.05)';
+                fileDropArea.style.borderColor = '#60a5fa';
+            }
+
+            fileDropArea.addEventListener('drop', handleDrop, false);
+            fileDropArea.addEventListener('click', () => fileInput.click());
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            displayFileList();
+            validateFiles();
+        }
+
+        // ファイル入力変更時
+        if (fileInput) {
+            fileInput.addEventListener('change', function() {
+                displayFileList();
+                validateFiles();
+            });
+        }
+
+        // ============================================================
+        // 確認画面機能
+        // ============================================================
+        
+        const contactForm = document.getElementById('contact-form');
+        const inputScreenButtons = document.getElementById('input-screen-buttons');
+        const confirmationScreen = document.getElementById('confirmation-screen');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const editBtn = document.getElementById('edit-btn');
+        const finalSubmitBtn = document.getElementById('final-submit-btn');
+
+        // ===== プライバシーポリシーモーダル制御 =====
+        const privacyModal = document.getElementById('privacy-modal');
+        const privacyPolicyLink = document.getElementById('privacy-policy-link');
+        const privacyCloseBtn = document.getElementById('privacy-close-btn');
+        const privacyAgreeBtn = document.getElementById('privacy-agree-btn');
+        const privacyDisagreeBtn = document.getElementById('privacy-disagree-btn');
+        const agreeTermsCheckbox = contactForm.querySelector('input[name="agree_terms"]');
+
+        // モーダルを開く
+        function openPrivacyModal() {
+            privacyModal.style.display = 'block';
+        }
+
+        // モーダルを閉じる
+        function closePrivacyModal() {
+            privacyModal.style.display = 'none';
+        }
+
+        // プライバシーポリシーリンククリック時
+        privacyPolicyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openPrivacyModal();
+        });
+
+        // 閉じるボタンクリック時
+        privacyCloseBtn.addEventListener('click', closePrivacyModal);
+
+        // 「同意する」ボタンクリック時
+        privacyAgreeBtn.addEventListener('click', function() {
+            agreeTermsCheckbox.checked = true;
+            closePrivacyModal();
+        });
+
+        // 「閉じる」ボタンクリック時
+        privacyDisagreeBtn.addEventListener('click', closePrivacyModal);
+
+        // モーダル外側クリック時（背景をクリック）に閉じる
+        document.addEventListener('click', function(e) {
+            if (privacyModal.style.display === 'block' && e.target === privacyModal) {
+                closePrivacyModal();
+            }
+        }, true); // キャプチャフェーズで処理
+        // ===== iPhone 対応：タッチイベント専用ハンドラー =====
+        privacyModal.addEventListener('touchend', function(e) {
+            // タッチが背景（ダーク部分）で終了した場合
+            if (privacyModal.style.display === 'block') {
+                // タッチの終了地点がモーダル背景であるか確認
+                const touch = e.changedTouches[0];
+                const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                
+                // 背景のモーダルコンテナをタップした場合
+                if (element === privacyModal || element.id === 'privacy-modal') {
+                    e.preventDefault();
+                    closePrivacyModal();
+                }
+            }
+        }, false);
+
+        // ===== プライバシーポリシーモーダル制御終了 =====
+
+        // 確認画面を表示
+        confirmBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // バリデーション実行（同じコードを使用）
+            const errorDiv = document.getElementById('form-error');
+            errorDiv.style.display = 'none';
+            errorDiv.innerHTML = '';
+
+            const company = contactForm.querySelector('input[name="company"]').value.trim();
+            const nameSei = contactForm.querySelector('input[name="name_sei"]').value.trim();
+            const nameMei = contactForm.querySelector('input[name="name_mei"]').value.trim();
+            const phone = contactForm.querySelector('input[name="phone"]').value.trim();
+            const email = contactForm.querySelector('input[name="email"]').value.trim();
+            const emailConfirm = contactForm.querySelector('input[name="email_confirm"]').value.trim();
+            const message = contactForm.querySelector('textarea[name="message"]').value.trim();
+            const inquiryTypes = Array.from(contactForm.querySelectorAll('input[name="inquiry_type[]"]:checked')).map(el => el.value);
+
+            // 基本バリデーション
+            if (!company) {
+                errorDiv.innerHTML = '会社名を入力してください';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (!nameSei || !nameMei) {
+                errorDiv.innerHTML = 'お名前を入力してください';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (!phone) {
+                errorDiv.innerHTML = '電話番号を入力してください';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (!isValidEmail(email)) {
+                errorDiv.innerHTML = 'メールアドレスの形式が正しくありません';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (email !== emailConfirm) {
+                errorDiv.innerHTML = 'メールアドレスが一致しません';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (!isValidPhone(phone)) {
+                errorDiv.innerHTML = '電話番号の形式が正しくありません';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (!message) {
+                errorDiv.innerHTML = 'お問い合わせ内容を入力してください';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // 確認画面に値を設定
+            document.getElementById('confirm-company').textContent = company;
+            document.getElementById('confirm-name').textContent = nameSei + ' ' + nameMei;
+            
+            const nameKanaSei = contactForm.querySelector('input[name="name_kana_sei"]').value.trim();
+            const nameKanaMei = contactForm.querySelector('input[name="name_kana_mei"]').value.trim();
+            document.getElementById('confirm-kana').textContent = nameKanaSei + ' ' + nameKanaMei;
+            
+            const department = contactForm.querySelector('input[name="department"]').value.trim();
+            document.getElementById('confirm-department').textContent = department || '（記入なし）';
+            
+            document.getElementById('confirm-phone').textContent = phone;
+            document.getElementById('confirm-email').textContent = email;
+            document.getElementById('confirm-inquiry').textContent = inquiryTypes.length > 0 ? inquiryTypes.join('、') : '（選択なし）';
+            document.getElementById('confirm-message').textContent = message;
+
+            // 画面切り替え
+            inputScreenButtons.style.display = 'none';
+            document.getElementById('confirmation-wrapper').style.display = 'block';  // ← ラッパー表示
+            confirmationScreen.style.display = 'block';
+            
+            // プライバシーポリシー同意状況を表示
+            const confirmAgreeTerms = document.getElementById('confirm-agree-terms');
+            if (agreeTermsCheckbox.checked) {
+                confirmAgreeTerms.textContent = '✓ 同意済み';
+                confirmAgreeTerms.style.color = '#16a34a';
+            } else {
+                confirmAgreeTerms.textContent = '未同意';
+                confirmAgreeTerms.style.color = '#dc2626';
+            }
+
+            // 確認画面にスクロール（ヘッダー高さ考慮 - タイトルが見えるように）
+            const confirmationWrapper = document.getElementById('confirmation-wrapper');
+            const headerOffset = 150; // タイトルが見えるオフセット
+            const elementPosition = confirmationWrapper.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        });
+
+        // 編集画面に戻る
+        editBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            inputScreenButtons.style.display = 'flex';
+            confirmationScreen.style.display = 'none';
+            document.getElementById('confirmation-wrapper').style.display = 'none';  // ← ラッパー非表示
+            // フォーム入力画面にスクロール（セクション全体が見えるように）
+            const contactSection = document.getElementById('contact');
+            const headerOffset = 100; // セクションタイトルが見えるオフセット
+            const elementPosition = contactSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        });
+
+        // 最終送信ボタン
+        finalSubmitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // formのsubmitイベントをトリガー
+            contactForm.dispatchEvent(new Event('submit'));
+        });
+
+        // ============================================================
+        // お問い合わせフォーム - スパム対策・バリデーション
+        // ============================================================
+        
+        // セッショントークン生成
+        function generateSessionToken() {
+            return 'token_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+
+        // ページロード時にセッショントークンを設定
+        document.addEventListener('DOMContentLoaded', function() {
+            const tokenField = document.getElementById('session_token');
+            if (tokenField) {
+                tokenField.value = generateSessionToken();
+            }
+        });
+
+        // スパム判定キーワード（営業メール判定用）
+        const spamKeywords = [
+            'FX', '暗号資産', '仮想通貨', '融資', 'ローン', 'キャッシング',
+            '投資', '副業', '稼ぐ', '在宅', '広告掲載', 'SEO対策',
+            'ホームページ制作', 'Web制作', 'マーケティング支援',
+            '人材派遣', '人材紹介', 'アフィリエイト', 'MLM'
+        ];
+
+        // URL個数チェック
+        function countUrls(text) {
+            const urlPattern = /(https?:\/\/[^\s]+)/g;
+            const matches = text.match(urlPattern);
+            return matches ? matches.length : 0;
+        }
+
+        // スパムキーワード検出
+        function detectSpamKeywords(text) {
+            for (let keyword of spamKeywords) {
+                if (text.includes(keyword)) {
+                    return keyword;
+                }
+            }
+            return null;
+        }
+
+        // メール形式バリデーション
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // 電話番号バリデーション
+        function isValidPhone(phone) {
+            const phoneRegex = /^[0-9\-]{10,}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // レート制限チェック（最後の送信時刻をlocalStorageに保存）
+        function checkRateLimit() {
+            const lastSubmitTime = localStorage.getItem('contact_form_last_submit');
+            if (lastSubmitTime) {
+                const timeDiff = Date.now() - parseInt(lastSubmitTime);
+                if (timeDiff < 5000) { // 5秒以下
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // フォーム送信処理
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const errorDiv = document.getElementById('form-error');
+                const submittingDiv = document.getElementById('form-submitting');
+                const submitButton = this.querySelector('button[type="submit"]');
+
+                errorDiv.style.display = 'none';
+                errorDiv.innerHTML = '';
+
+                // ========== スパム対策チェック開始 ==========
+
+                // 1. Honeypot チェック
+                const honeypotField = this.querySelector('input[name="website"]');
+                if (honeypotField && honeypotField.value) {
+                    console.warn('Bot detected: honeypot field filled');
+                    errorDiv.innerHTML = 'フォーム送信エラーが発生しました';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 2. レート制限チェック
+                if (!checkRateLimit()) {
+                    errorDiv.innerHTML = 'フォーム送信は5秒以上の間隔を開けてください';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 3. 必須フィールドのバリデーション
+                const company = this.querySelector('input[name="company"]').value.trim();
+                const nameSei = this.querySelector('input[name="name_sei"]').value.trim();
+                const nameMei = this.querySelector('input[name="name_mei"]').value.trim();
+                const phone = this.querySelector('input[name="phone"]').value.trim();
+                const email = this.querySelector('input[name="email"]').value.trim();
+                const emailConfirm = this.querySelector('input[name="email_confirm"]').value.trim();
+                const message = this.querySelector('textarea[name="message"]').value.trim();
+                const inquiryTypes = Array.from(this.querySelectorAll('input[name="inquiry_type[]"]:checked')).map(el => el.value);
+
+                if (!company) {
+                    errorDiv.innerHTML = '会社名を入力してください';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                if (!nameSei || !nameMei) {
+                    errorDiv.innerHTML = 'お名前を入力してください';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                if (!phone) {
+                    errorDiv.innerHTML = '電話番号を入力してください';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 4. メールアドレスバリデーション
+                if (!isValidEmail(email)) {
+                    errorDiv.innerHTML = 'メールアドレスの形式が正しくありません';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 5. メールアドレス確認チェック
+                if (email !== emailConfirm) {
+                    errorDiv.innerHTML = 'メールアドレスが一致しません';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 6. 電話番号バリデーション
+                if (!isValidPhone(phone)) {
+                    errorDiv.innerHTML = '電話番号の形式が正しくありません（数字とハイフンのみ、10桁以上）';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 7. メッセージ必須チェック
+                if (!message) {
+                    errorDiv.innerHTML = 'お問い合わせ内容を入力してください';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 8. URL個数チェック
+                const urlCount = countUrls(message);
+                if (urlCount >= 3) {
+                    console.warn(`Spam detected: ${urlCount} URLs found`);
+                    errorDiv.innerHTML = 'メッセージに含まれるURLが多すぎます。3個以上のURLは送信できません';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 9. スパムキーワード検出
+                const detectedKeyword = detectSpamKeywords(message);
+                if (detectedKeyword) {
+                    console.warn(`Spam keyword detected: ${detectedKeyword}`);
+                    errorDiv.innerHTML = `検出された営業メール関連キーワード: "${detectedKeyword}"。申し訳ございませんが、本来のお問い合わせ内容でご送信ください`;
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 10. 同意確認
+                const agreeCheckbox = this.querySelector('input[name="agree_terms"]');
+                if (!agreeCheckbox || !agreeCheckbox.checked) {
+                    errorDiv.innerHTML = 'プライバシーポリシーに同意する必要があります';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // 11. ファイル添付バリデーション
+                if (!validateFiles()) {
+                    return; // エラーメッセージは validateFiles() 内で表示
+                }
+
+                // ========== スパム対策チェック終了 ==========
+
+                // 全てのチェックをパス - 送信処理へ
+                // submitButton は確認画面側では null になるため、null チェック追加
+                if (submitButton) {
+                    submitButton.disabled = true;
+                }
+                submittingDiv.style.display = 'block';
+
+                try {
+                    // FormDataオブジェクトを作成
+                    const formData = new FormData(this);
+
+                    // PHPハンドラーに送信
+                    const response = await fetch('qform_handler_with_attachment_v2.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+if (result.success) {
+    // 送信成功
+    submittingDiv.style.display = 'none';
+    
+    // 確認画面全体を非表示にする
+    const confirmationWrapper = document.getElementById('confirmation-wrapper');
+    if (confirmationWrapper) {
+        confirmationWrapper.style.display = 'none';
+    }
+    
+    const successMsg = document.createElement('div');
+    successMsg.style.cssText = 'background: #4ade80; color: white; padding: 2rem; border-radius: 8px; text-align: center; font-size: 1.1rem; margin-bottom: 2rem; box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);';
+    successMsg.innerHTML = '<strong style="font-size: 1.3rem; display: block; margin-bottom: 0.75rem;">✓ ご送信ありがとうございました</strong><p style="margin-top: 0.5rem;">確認メールをお送りしいたします。</p><p style="margin-top: 1rem; font-size: 0.9rem;">追ってご連絡いたします。</p>';
+    
+    // フォームコンテナの中に挿入
+    const contactForm = document.getElementById('contact');
+    if (contactForm) {
+        try {
+            // 工場見学セクションを取得
+            const factorySection = contactForm.querySelector('.contact-info');
+            
+            // parentNode を確認して insertBefore を実行
+            if (factorySection && factorySection.parentNode === contactForm) {
+                // contactForm.insertBefore(successMsg, factorySection);
+                // ✅ エラーハンドリング付き修正版
+try {
+    // 成功メッセージを作成
+    const successMsg = document.createElement('div');
+    successMsg.id = 'success-message';
+    successMsg.style.backgroundColor = '#d4edda';
+    successMsg.style.color = '#155724';
+    successMsg.style.padding = '1rem';
+    successMsg.style.marginBottom = '1rem';
+    successMsg.style.borderRadius = '4px';
+    successMsg.style.border = '1px solid #c3e6cb';
+    successMsg.textContent = '✅ お問い合わせを送信しました。ありがとうございました。';
+    
+    // 参照ノード確認
+    const factorySection = contactForm.querySelector('.contact-info');
+    
+    if (factorySection && factorySection.parentNode === contactForm) {
+        // ✅ 親ノードが正しい場合のみ insertBefore を実行
+        contactForm.insertBefore(successMsg, factorySection);
+        console.log('✓ Success message inserted before factory section');
+    } else {
+        // ✅ フォールバック: appendChild を使用
+        contactForm.appendChild(successMsg);
+        console.log('✓ Success message appended (insertBefore fallback)');
+    }
+    
+} catch (error) {
+    // ❌ エラーが発生した場合でも処理を続行
+    console.error('[ERROR] Success message insertion failed:', error.message);
+    
+    // さらに強いフォールバック
+    const successMsg = document.createElement('div');
+    successMsg.textContent = '✅ お問い合わせを送信しました。ありがとうございました。';
+    successMsg.style.padding = '1rem';
+    successMsg.style.margin = '1rem 0';
+    successMsg.style.backgroundColor = '#d4edda';
+    
+    try {
+        document.body.insertBefore(successMsg, document.body.firstChild);
+        console.log('✓ Success message inserted at body top (emergency fallback)');
+    } catch (bodyError) {
+        console.error('[ERROR] All insertion attempts failed:', bodyError.message);
+    }
+}
+                console.log('✓ Success message inserted before factory section');
+            } else {
+                // fallback: 最後に追加
+                contactForm.appendChild(successMsg);
+                console.log('✓ Success message appended (factory section not found or different parent)');
+            }
+            
+            // スクロール処理を try-catch で保護
+            setTimeout(() => {
+                try {
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    console.log('✓ Scrolled to success message');
+                } catch(scrollError) {
+                    console.warn('⚠ scrollIntoView not supported, using fallback');
+                    // Fallback: window.scrollTo を使用
+                    window.scrollTo({
+                        top: successMsg.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 300);
+            
+                } catch(e) {
+                    console.error('❌ Error displaying success message:', e);
+                    // エラーでも確実に完了メッセージを表示
+                    if (!contactForm.contains(successMsg)) {
+                    contactForm.appendChild(successMsg);
+                    console.log('✓ Success message appended (error recovery)');
+                    }
+                }
+            }
+
+                        // レート制限用タイムスタンプを保存
+                        localStorage.setItem('contact_form_last_submit', Date.now().toString());
+
+                    } else {
+                        // 送信失敗
+                        submittingDiv.style.display = 'none';
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                        }
+                        errorDiv.innerHTML = result.error || 'フォーム送信エラーが発生しました';
+                        errorDiv.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    submittingDiv.style.display = 'none';
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                    }
+                    errorDiv.innerHTML = 'フォーム送信エラーが発生しました。時間をおいて再度お試しください。';
+                    errorDiv.style.display = 'block';
+                }
+            });
+        }
+
+        // ===== スマホのみ: ヘッダー自動非表示機能 - 一時無効化 =====
+        // 【修正日: 2025-11-14】
+        // スクロール関連の問題が発生したため、一時的に無効化
+        // 問題解決後に改善版を再実装予定
+        /*
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            const header = document.querySelector('.header');
+            let lastScrollTop = 0;
+            const scrollThreshold = 5; // 5px以上の変動のみ判定
+
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // 微小なスクロール変動（5px以下）は無視
+                if (Math.abs(currentScroll - lastScrollTop) > scrollThreshold) {
+                    if (currentScroll > lastScrollTop) {
+                        // 下にスクロール → ヘッダーを隠す
+                        header.style.transform = 'translateY(-100%)';
+                        header.style.transition = 'transform 0.3s ease-in-out';
+                    } else {
+                        // 上にスクロール → ヘッダーを表示
+                        header.style.transform = 'translateY(0)';
+                        header.style.transition = 'transform 0.3s ease-in-out';
+                    }
+                    
+                    lastScrollTop = currentScroll;
+                }
+            });
+        }
+        */
+        // ===== ヘッダー自動非表示機能 - 無効化ここまで =====
+        
+        // ===== スマホ用ハンバーガーメニュー制御 =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMobile = document.getElementById('navMobile');
+        const companyMenuToggle = document.getElementById('companyMenuToggle');
+        const companySubmenu = document.getElementById('companySubmenu');
+        
+        // ハンバーガーボタンクリック時
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMobile.classList.toggle('active');
+            });
+        }
+        
+        // モバイルメニュー内のリンククリック時にメニューを閉じる
+        const mobileMenuLinks = navMobile.querySelectorAll('a:not(#companyMenuToggle)');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                navMobile.classList.remove('active');
+                companySubmenu.classList.remove('active');
+            });
+        });
+        
+        // 会社情報のサブメニュー切り替え
+        if (companyMenuToggle) {
+            companyMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                companySubmenu.classList.toggle('active');
+            });
+        }
+        
+        // 背景（モバイルナビ外側）クリック時にメニューを閉じる
+        document.addEventListener('click', function(e) {
+            if (!navMobile.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navMobile.classList.remove('active');
+                companySubmenu.classList.remove('active');
+            }
+        });
+        // ===== ハンバーガーメニュー制御ここまで =====
+    </script>
+</body>
+</html>
