@@ -1,10 +1,23 @@
-baseURL = 'https://shinji-hongo.github.io/hongo-tech-articles/'
-languageCode = 'ja'
-title = 'Hongo Tech Articles'
-theme = 'blowfish'
-publishDir = "docs"
+theme = "blowfish"
+baseURL = "http://localhost:1313/"
+languageCode = "ja"
+defaultContentLanguage = "ja"
+title = "Hongo Tech Articles"
+
+enableRobotsTXT = true
+summaryLength = 30
+hasCJKLanguage = true
+
+buildDrafts = false
+buildFuture = false
+
+enableEmoji = true
 
 [outputs]
   home = ["HTML", "JSON", "RSS"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
