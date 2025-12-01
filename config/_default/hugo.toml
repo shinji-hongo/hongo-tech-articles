@@ -2,6 +2,7 @@ baseURL = 'http://localhost:1313/'
 languageCode = 'ja'
 title = 'Hongo Tech Articles'
 theme = 'blowfish'
+publishDir = "docs"
 
 [outputs]
   home = ["HTML", "JSON", "RSS"]
