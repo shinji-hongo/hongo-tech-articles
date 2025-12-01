@@ -3,72 +3,72 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>http://localhost:1313/it/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/it/</loc>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="http://localhost:1313/en/"
+      href="https://hongo-tech-articles.pages.dev/en/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="http://localhost:1313/"
+      href="https://hongo-tech-articles.pages.dev/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="http://localhost:1313/zh-cn/"
+      href="https://hongo-tech-articles.pages.dev/zh-cn/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="http://localhost:1313/it/"
+      href="https://hongo-tech-articles.pages.dev/it/"
     />
   </url>
   <url>
-    <loc>http://localhost:1313/it/categories/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/it/categories/</loc>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="http://localhost:1313/en/categories/"
+      href="https://hongo-tech-articles.pages.dev/en/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="http://localhost:1313/categories/"
+      href="https://hongo-tech-articles.pages.dev/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="http://localhost:1313/zh-cn/categories/"
+      href="https://hongo-tech-articles.pages.dev/zh-cn/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="http://localhost:1313/it/categories/"
+      href="https://hongo-tech-articles.pages.dev/it/categories/"
     />
   </url>
   <url>
-    <loc>http://localhost:1313/it/tags/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/it/tags/</loc>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="http://localhost:1313/en/tags/"
+      href="https://hongo-tech-articles.pages.dev/en/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="http://localhost:1313/tags/"
+      href="https://hongo-tech-articles.pages.dev/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="http://localhost:1313/zh-cn/tags/"
+      href="https://hongo-tech-articles.pages.dev/zh-cn/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="http://localhost:1313/it/tags/"
+      href="https://hongo-tech-articles.pages.dev/it/tags/"
     />
   </url>
 </urlset>

@@ -3,99 +3,99 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>http://localhost:1313/tags/ai/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/tags/ai/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-    <xhtml:link
-      rel="alternate"
-      hreflang="en"
-      href="http://localhost:1313/en/categories/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="it"
-      href="http://localhost:1313/it/categories/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="zh-cn"
-      href="http://localhost:1313/zh-cn/categories/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="http://localhost:1313/categories/"
-    />
-  </url>
-  <url>
-    <loc>http://localhost:1313/tags/claude/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:1313/tags/github/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:1313/posts/001-github-claude-compatibility/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/categories/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="http://localhost:1313/en/tags/"
+      href="https://hongo-tech-articles.pages.dev/en/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="http://localhost:1313/it/tags/"
+      href="https://hongo-tech-articles.pages.dev/it/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="http://localhost:1313/zh-cn/tags/"
+      href="https://hongo-tech-articles.pages.dev/zh-cn/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="http://localhost:1313/tags/"
+      href="https://hongo-tech-articles.pages.dev/categories/"
     />
   </url>
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/tags/claude/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://hongo-tech-articles.pages.dev/tags/github/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://hongo-tech-articles.pages.dev/posts/001-github-claude-compatibility/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://hongo-tech-articles.pages.dev/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="http://localhost:1313/en/"
+      href="https://hongo-tech-articles.pages.dev/en/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="http://localhost:1313/it/"
+      href="https://hongo-tech-articles.pages.dev/it/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="http://localhost:1313/zh-cn/"
+      href="https://hongo-tech-articles.pages.dev/zh-cn/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="http://localhost:1313/"
+      href="https://hongo-tech-articles.pages.dev/"
     />
   </url>
   <url>
-    <loc>http://localhost:1313/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</loc>
+    <loc>https://hongo-tech-articles.pages.dev/posts/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://hongo-tech-articles.pages.dev/tags/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://hongo-tech-articles.pages.dev/en/tags/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="it"
+      href="https://hongo-tech-articles.pages.dev/it/tags/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="https://hongo-tech-articles.pages.dev/zh-cn/tags/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="ja"
+      href="https://hongo-tech-articles.pages.dev/tags/"
+    />
+  </url>
+  <url>
+    <loc>https://hongo-tech-articles.pages.dev/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
   </url>
 </urlset>

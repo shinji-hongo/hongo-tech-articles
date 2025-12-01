@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AI on Blowfish</title>
-    <link>http://localhost:1313/tags/ai/</link>
+    <link>https://hongo-tech-articles.pages.dev/tags/ai/</link>
     <description>Recent content in AI on Blowfish</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <managingEditor>nuno@n9o.xyz (Blowfish)</managingEditor>
     <webMaster>nuno@n9o.xyz (Blowfish)</webMaster>
     <copyright>© 2025 Blowfish</copyright>
-    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hongo-tech-articles.pages.dev/tags/ai/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>GitHub と Claude の親和性について</title>
-      <link>http://localhost:1313/posts/001-github-claude-compatibility/</link>
+      <link>https://hongo-tech-articles.pages.dev/posts/001-github-claude-compatibility/</link>
       <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
       <author>nuno@n9o.xyz (Blowfish)</author>
-      <guid>http://localhost:1313/posts/001-github-claude-compatibility/</guid>
+      <guid>https://hongo-tech-articles.pages.dev/posts/001-github-claude-compatibility/</guid>
       <description>&lt;h2 class=&#34;relative group&#34;&gt;はじめに
     &lt;div id=&#34;はじめに&#34; class=&#34;anchor&#34;&gt;&lt;/div&gt;
     
