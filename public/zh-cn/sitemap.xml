@@ -3,72 +3,72 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/</loc>
+    <loc>http://localhost:1313/zh-cn/</loc>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/en/"
+      href="http://localhost:1313/en/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/it/"
+      href="http://localhost:1313/it/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/"
+      href="http://localhost:1313/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/"
+      href="http://localhost:1313/zh-cn/"
     />
   </url>
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/categories/</loc>
+    <loc>http://localhost:1313/zh-cn/categories/</loc>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/en/categories/"
+      href="http://localhost:1313/en/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/it/categories/"
+      href="http://localhost:1313/it/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/categories/"
+      href="http://localhost:1313/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/categories/"
+      href="http://localhost:1313/zh-cn/categories/"
     />
   </url>
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/tags/</loc>
+    <loc>http://localhost:1313/zh-cn/tags/</loc>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/en/tags/"
+      href="http://localhost:1313/en/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/it/tags/"
+      href="http://localhost:1313/it/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/tags/"
+      href="http://localhost:1313/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/tags/"
+      href="http://localhost:1313/zh-cn/tags/"
     />
   </url>
 </urlset>

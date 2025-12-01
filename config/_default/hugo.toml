@@ -1,8 +1,9 @@
 theme = "blowfish"
-baseURL = "https://shinji-hongo.github.io/hongo-tech-articles/"
+baseURL = "https://hongo-tech-articles.pages.dev/"
 languageCode = "ja"
 defaultContentLanguage = "ja"
 title = "Hongo Tech Articles"
+publishDir = "public"
 
 enableRobotsTXT = true
 summaryLength = 30

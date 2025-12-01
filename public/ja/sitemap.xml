@@ -3,99 +3,99 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/tags/ai/</loc>
+    <loc>http://localhost:1313/tags/ai/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/categories/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-    <xhtml:link
-      rel="alternate"
-      hreflang="en"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/en/categories/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="it"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/it/categories/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="zh-cn"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/categories/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/categories/"
-    />
-  </url>
-  <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/tags/claude/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/tags/github/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/posts/001-github-claude-compatibility/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/posts/</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/tags/</loc>
+    <loc>http://localhost:1313/categories/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/en/tags/"
+      href="http://localhost:1313/en/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/it/tags/"
+      href="http://localhost:1313/it/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/tags/"
+      href="http://localhost:1313/zh-cn/categories/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/tags/"
+      href="http://localhost:1313/categories/"
     />
   </url>
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/</loc>
+    <loc>http://localhost:1313/tags/claude/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:1313/tags/github/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:1313/posts/001-github-claude-compatibility/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/en/"
+      href="http://localhost:1313/en/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="it"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/it/"
+      href="http://localhost:1313/it/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/zh-cn/"
+      href="http://localhost:1313/zh-cn/tags/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="ja"
-      href="https://shinji-hongo.github.io/hongo-tech-articles/"
+      href="http://localhost:1313/tags/"
     />
   </url>
   <url>
-    <loc>https://shinji-hongo.github.io/hongo-tech-articles/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="http://localhost:1313/en/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="it"
+      href="http://localhost:1313/it/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="http://localhost:1313/zh-cn/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="ja"
+      href="http://localhost:1313/"
+    />
+  </url>
+  <url>
+    <loc>http://localhost:1313/categories/%E9%96%8B%E7%99%BA%E6%89%8B%E6%B3%95/</loc>
     <lastmod>2025-01-15T00:00:00+00:00</lastmod>
   </url>
 </urlset>
