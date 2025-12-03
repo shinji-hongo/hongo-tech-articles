@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://hongo-tech-articles.pages.dev/sitemap.xml
