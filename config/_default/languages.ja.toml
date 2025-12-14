@@ -1,23 +1,22 @@
 languageCode = "ja"
 languageName = "日本語"
 weight = 3
-title = "Blowfish"
+title = "本郷工業 技術ブログ"
 
 [params]
   displayName = "日本語"
   isoCode = "ja"
   rtl = false
   dateFormat = "2006-01-02"
-  logo = "img/blowfish_logo_transparent.png"
-  description = "強力で、軽量な Hugo のテーマです。"
+  logo = "img/hongo_logo.png"
+  description = "製造業のWebサイトリニューアル経験から学んだ技術記事。HTMLからSEO、セキュリティ、スパム対策まで、実装の現場から得られた知見を共有します。"
 
 [params.author]
-  name = "Blowfish"
-  email = "nuno@n9o.xyz"
-  image = "img/blowfish_logo.png"
-  headline = "強力で、軽量な Hugo のテーマです。"
-  bio = "強力で、軽量な Hugo のテーマです。"
+  name = "Hongo 中の人"
+  image = "img/author.png"
+  headline = "本郷工業CEO / 製造業Webリニューアル実践者"
+  bio = "製造業向けWebサイト、CMS構築の経験から技術ブログを発信。Claude等の生成AIを参謀として活用した実装戦略。"
   links = [
-    { x-twitter = "https://twitter.com/burufugu" },
-    { github = "https://github.com/nunocoracao/blowfish" },
+    { x-twitter = "https://twitter.com/Shinji_Hongo" },
+    { github = "https://github.com/shinji-hongo" },
   ]

@@ -2,7 +2,7 @@ theme = "blowfish"
 baseURL = "https://hongo-tech-articles.pages.dev/"
 languageCode = "ja"
 defaultContentLanguage = "ja"
-title = "Hongo Tech Articles"
+title = "本郷工業 技術ブログ"
 publishDir = "public"
 
 enableRobotsTXT = true
