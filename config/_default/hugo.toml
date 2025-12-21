@@ -4,6 +4,7 @@ languageCode = "ja"
 defaultContentLanguage = "ja"
 title = "本郷工業 技術ブログ"
 publishDir = "public"
+googleAnalytics = "G-NZV4DM4GN5"
 
 enableRobotsTXT = true
 summaryLength = 30
