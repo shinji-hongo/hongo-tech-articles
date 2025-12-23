@@ -1,0 +1,9 @@
+/* Improve code block visibility */
+.prose .chroma {
+  background-color: #e5e7eb !important; /* bg-gray-200 - light mode */
+}
+
+/* Darker for dark mode - more contrast */
+.dark .prose .chroma {
+  background-color: #111827 !important; /* bg-gray-950 - much darker */
+}
