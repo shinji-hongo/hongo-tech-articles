@@ -1,0 +1,19 @@
+/* ヒーローエリアの背景・画像設定を「全体表示」に強制上書き */
+.hero-image,
+main img[src*="hongo_logo"],
+.min-h-\[300px\] img,
+section.relative img {
+    object-fit: contain !important; /* 切り抜かず全体を収める */
+    object-position: center !important; /* 中央に配置 */
+    width: 100% !important;
+    height: auto !important;
+    max-height: 200px !important; /* 高さを抑えて横長ロゴの比率を守る */
+}
+
+/* ヒーローセクション自体の背景黒透過などをリセット（ロゴを見やすくする） */
+section.relative.h-full.w-full {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 120px !important; /* ロゴの高さに合わせて調整 */
+}
