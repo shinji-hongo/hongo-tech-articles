@@ -1,7 +1,7 @@
 ---
 title: "Claude で何ができるか — 参謀として活用した HP リニューアル"
 date: 2025-01-01
-draft: true
+draft: false
 categories: ["戦略/経営層向け"]
 tags: ["Claude活用", "HP リニューアル", "生成AI", "参謀活用"]
 description: "HP リニューアルは『できるの？』という気軽な質問から始まった。CMS なし、外注なしで、Claude を参謀として本格化させるまでの 6 ヶ月間のジャーニー。"

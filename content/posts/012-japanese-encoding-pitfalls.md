@@ -1,10 +1,10 @@
 ---
 title: '日本語処理の落とし穴　—　エンコーディング基礎と実装パターン'
-date: 2025-04-01
+date: 2026-04-01
 description: 'UTF-8/Shift-JIS の基礎知識から、Heredoc での実装上の注意まで。開発者が直面する日本語処理の複合問題を解決する'
 tags: ['日本語処理', 'エンコーディング', 'PHP', 'UTF-8', '実装ネタ']
 categories: ['開発者向け']
-draft: true
+draft: false
 ---
 
 ## はじめに
