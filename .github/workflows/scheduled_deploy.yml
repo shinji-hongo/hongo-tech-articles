@@ -1,7 +1,11 @@
 name: Scheduled Deploy to Cloudflare Pages
 
 on:
+push:
+    branches:
+      - master  # main ではなく master に変更
   schedule:
+  # 毎日 日本時間の午前9時（UTC 0:00）
     - cron: '0 0 * * *'
   workflow_dispatch:
 
@@ -11,3 +15,4 @@ jobs:
     steps:
       - name: Trigger Cloudflare Pages Build
         run: curl -X POST "${{ secrets.CF_PAGES_DEPLOY_HOOK }}"
+        
