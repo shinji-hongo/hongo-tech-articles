@@ -5,7 +5,10 @@ draft: false
 description: "複数環境での開発で、Claude に任せたファイルの命名規則がなく混乱。Git による履歴管理導入で解決。コミットメッセージが最重要という実感。"
 tags: ["GitHub", "Claude", "Git", "プロジェクト管理", "AI活用"]
 categories: ["開発手法"]
+image: "007-top.png"
 ---
+
+![GitHub + Claude affinity](007-top.png)
 
 ## はじめに
 
